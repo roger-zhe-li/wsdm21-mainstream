@@ -21,6 +21,7 @@ Run NAECF and DeepCoNN:
 python3 test.py --dataset instant_video --coef_u 0.5  --coef_i 0.5  --seed 1992  --batch_size 256  --mode 4
 
 Run MF:
+
 python3 test_mf.py --dataset instant_video --seed 1992  --batch_size 256  --mode 5
 
 
