@@ -28,7 +28,9 @@ python3 test_mf.py --dataset instant_video --seed 1992  --batch_size 256  --mode
 We provide three processed datasets: Amazon Instant Video, Amazon Digital Music and BeerAdvocate. The BeerAdvocate dataset keeps users with at least 5 interactions, and sample 25% users in the original dataset.
 
 ## License
-This work is licensed under a Creative Commons Attribution International 4.0 License [https://creativecommons.org/licenses/by/4.0/].
+* The paper is licensed under a [Creative Commons Attribution International 4.0 License](https://creativecommons.org/licenses/by/4.0/).
+* Databases and their contents are distributed under the terms of the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
+* Software is distributed under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 
 
