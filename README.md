@@ -13,7 +13,7 @@ We use PyTorch 1.6.0 as the main deep learning framework for implementation. The
 
 
 
-## Example to run the codes.
+## Example to run the code.
 The instruction of commands has been clearly stated in the code (see the parse_args function). 
 
 Run NAECF and DeepCoNN:
@@ -26,6 +26,10 @@ python3 test_mf.py --dataset instant_video --seed 1992  --batch_size 256  --mode
 
 ### Dataset
 We provide three processed datasets: Amazon Instant Video, Amazon Digital Music and BeerAdvocate. The BeerAdvocate dataset keeps users with at least 5 interactions, and sample 25% users in the original dataset.
+
+## License
+This work is licensed under a Creative Commons Attribution International 4.0 License [https://creativecommons.org/licenses/by/4.0/].
+
 
 
 Last Update Date: January 21, 2021
