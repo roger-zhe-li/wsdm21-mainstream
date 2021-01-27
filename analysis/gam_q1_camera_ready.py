@@ -127,7 +127,7 @@ opt_weights = [[2, 5, 0.1, 10, 1, 5, 0.1, 0.1, 0, 0.5],
 
 
 
-fig, axes = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(45, 15))
+fig, axes = plt.subplots(1, 3, sharex=True, sharey=True, figsize=(50, 20))
 for i in range(len(datasets)):
 	dataset = datasets[i]
 
@@ -215,11 +215,12 @@ for i in range(len(datasets)):
 	diag = np.linspace(1, 1+u_lim)
 	zeros = np.linspace(0, 0)
 
-	# axes[i].scatter(np.array(data_dc)[:, 0], np.array(data_dc)[:, 1], s=4, alpha=.03, color='r')
+	axes[i].scatter(np.array(data_dc)[:, 0], np.array(data_dc)[:, 1], s=4, alpha=.03, color='r')
 	# axes[i].scatter(np.array(data_best)[:, 0], np.array(data_best)[:, 1], s=4, alpha=.03, color='black')
-	# axes[i].scatter(np.array(data_mf)[:, 0], np.array(data_mf)[:, 1], s=4, alpha=.03, color='b')
+	axes[i].scatter(np.array(data_mf)[:, 0], np.array(data_mf)[:, 1], s=4, alpha=.03, color='b')
 
 	axes[i].plot(diag, zeros, color='black', ls='--', lw=3)
+	axes[i].set_ylim()
 
 	if i == 0:
 		axes[i].plot(XX, gam.predict(XX), label='DeepCoNN', color='r', lw=4)
@@ -248,6 +249,7 @@ for i in range(len(datasets)):
 	axes[i].set_xticks(range(1, 6))
 	axes[i].set_xticklabels(range(5))
 	axes[i].set_xlim(1, 5)
+	axes[i].set_ylim(-2, 3)
 
 	axes[i].spines['bottom'].set_linewidth(2);###设置底部坐标轴的粗细
 	axes[i].spines['left'].set_linewidth(2);####设置左边坐标轴的粗细
@@ -271,8 +273,8 @@ plt.ylabel('uRMSE gain over MF',fontsize=48, labelpad=60)
 # fig.suptitle(ds, fontsize=36, fontweight='bold', y=1.05)
 # plt.title(ds, fontsize=36, fontweight='bold', y=1.02)
 plt.tight_layout()
-fig.savefig(os.path.join('figures', 'q1_camera_ready.png'), rasterized=True, dpi=300, bbox_inches='tight')
-# fig.savefig(os.path.join('figures', 'q1_scatter.png'), rasterized=True, dpi=80, bbox_inches='tight')
+# fig.savefig(os.path.join('figures', 'q1_camera_ready_new.png'), rasterized=True, dpi=300, bbox_inches='tight')
+fig.savefig(os.path.join('figures', 'q1_scatter_camera_ready.png'), rasterized=True, dpi=80, bbox_inches='tight')
 
 
 

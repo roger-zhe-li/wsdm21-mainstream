@@ -123,7 +123,7 @@ map_vir = cm.get_cmap(name='jet')
 color = [map_vir(i) for i in np.linspace(0, 1, len(weights_u))]
 # print(color)
 
-fig, axes = plt.subplots(1, 3, sharex=True, figsize=(50, 15))
+fig, axes = plt.subplots(1, 3, sharex=True, figsize=(50, 20), dpi=80)
 for i in range(len(datasets)):
 	dataset = datasets[i]
 
@@ -144,12 +144,12 @@ for i in range(len(datasets)):
 				# df_valid = read_valid(data_path, weight_u, weight_i)
 				df_test = read_test(data_path, weight_u, weight_i)
 				df_cos = read_cos(data_path, weight_u, weight_i)
-				df_cos_item = read_cos_item(data_path, weight_u, weight_i)
+				df_cos_items = read_cos_item(data_path, weight_u, weight_i)
 				dfs.append(df)
 				# dfs_valid.append(df_valid)
 				dfs_test.append(df_test)
 				dfs_cos.append(df_cos)
-				dfs_cos_item.append(df_cos_item)
+				dfs_cos_item.append(df_cos_items)
 				print(weight_u, weight_i)
 
 
@@ -162,6 +162,7 @@ for i in range(len(datasets)):
 			data_t = []
 			x = dfs_test[j].iloc[:, k].tolist()
 			y = dfs_cos[j].iloc[:, k].tolist()
+			y = [((1 - value) / 2) ** 2 for value in y]
 
 			user = read_train(train_path, seeds[k-1]).user_id.tolist()
 			user_ = read_valid_test(train_path, seeds[k-1]).user_id.tolist()
@@ -183,12 +184,12 @@ for i in range(len(datasets)):
 		else:
 			axes[i].plot(XX, gam.predict(XX), color=color[j], lw=3)
 		# axes.set_ylim(0.41, 0.47)
-		if i == 0:
-			axes[i].set_ylim(0.15, 0.40)
-		elif i == 1:
-			axes[i].set_ylim(0.10, 0.35)
-		elif i == 2:
-			axes[i].set_ylim(0.41, 0.47)
+		# if i == 0:
+		# 	axes[i].set_ylim(0.15, 0.40)
+		# elif i == 1:
+		# 	axes[i].set_ylim(0.10, 0.35)
+		# elif i == 2:
+		# 	axes[i].set_ylim(0.41, 0.47)
 		axes[i].set_xscale('log', basex=np.e)
 		axes[i].xaxis.set_major_formatter(formatter)
 		axes[i].set_xticks(range(1, 6))
@@ -198,7 +199,7 @@ for i in range(len(datasets)):
 		# axes[k-1, j-1].scatter(np.array(data)[:, 0], np.array(data)[:, 1], color='gray', s=8)
 		
 		# axes[i].set_rasterization_zorder(1)
-		# axes[i].scatter(np.array(data)[:, 0], np.array(data)[:, 1], alpha=.1, s=4, color=color[j], zorder=0)
+		axes[i].scatter(np.array(data)[:, 0], np.array(data)[:, 1], alpha=.1, s=4, color=color[j], zorder=0)
 		
 
 
@@ -209,12 +210,23 @@ for i in range(len(datasets)):
 		axes[i].tick_params(axis='both', direction='out', labelsize=36)
 		axes[i].grid()
 
+		if i == 0:
+			axes[i].set_ylim(0.07, 0.2)
+		elif i == 1:
+			axes[i].set_ylim(0.07, 0.2)
+		elif i == 2:
+			axes[i].set_ylim(0.06, 0.1)
+
+
 # if dataset == 'instant_video':
 # 	axes[j-1].set_ylim(0.2, 0.4)
 # elif dataset == 'digital_music':
 # 	axes[j-1].set_ylim(0.15, 0.3)
 # elif dataset == 'beer':
 # 	axes[j-1].set_ylim(0.42, 0.46)
+
+	# if dataset == 'beer':
+	# 	axes[j-1].set_ylim(0.06, 0.1)
 
 # axes[-1].legend(loc=2, bbox_to_anchor=(1.05, 0.7), borderaxespad=0, fontsize=48, title='Weight', ncol=1, title_fontsize=48)
 fig.subplots_adjust(top=0.9, left=0.1, right=0.9, bottom=0.2)
@@ -232,12 +244,12 @@ fig = axes[0].get_figure()  # getting the figure
 ax0 = fig.add_subplot(111, frame_on=False)   # creating a single axes
 plt.tick_params(labelcolor='none', top=False, bottom=False, left=False, right=False)
 plt.xlabel('uRMSE', fontsize=48)
-plt.ylabel('User Cosine Similarity',fontsize=48, labelpad=48)
+plt.ylabel('User Reconstruction Loss',fontsize=48, labelpad=48)
 # fig.suptitle(ds, fontsize=36, fontweight='bold', y=1.05)
 # plt.title(ds, fontsize=36, fontweight='bold', y=1.02)
 plt.tight_layout()
-# fig.savefig(os.path.join('figures', 'q3_scatter.png'), rasterized=True, dpi=80)
-fig.savefig(os.path.join('figures', 'q3_camera_ready.png'), rasterized=True, dpi=300)
+fig.savefig(os.path.join('figures', 'q3_scatter_new.png'), rasterized=True, dpi=80)
+# fig.savefig(os.path.join('figures', 'q3_camera_ready.png'), rasterized=True, dpi=300)
 
 
 

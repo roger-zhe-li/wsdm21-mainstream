@@ -117,16 +117,7 @@ color = [map_vir(i) for i in np.linspace(0, 1, 4)]
 
 
 
-
-
-data = []
-
-data_bin_0 = []
-data_bin_1 = []
-data_bin_2 = []
-data_bin_3 = []	
-
-fig, axes = plt.subplots(1, 3, sharex=True, figsize=(50, 15))
+fig, axes = plt.subplots(1, 3, sharex=True, figsize=(50, 20), dpi=80)
 for i in range(len(datasets)):
 	dataset = datasets[i]
 	data_path = os.path.join(data_store_path, dataset, 'Results', 'latent_factor_'+str(latent_factor_num), 'mode_4')
@@ -143,19 +134,28 @@ for i in range(len(datasets)):
 				# df_valid = read_valid(data_path, weight_u, weight_i)
 				df_test = read_test(data_path, weight_u, weight_i)
 				df_cos = read_cos(data_path, weight_u, weight_i)
-				df_cos_item = read_cos_item(data_path, weight_u, weight_i)
+				df_cos_items = read_cos_item(data_path, weight_u, weight_i)
 				dfs.append(df)
 				# dfs_valid.append(df_valid)
 				dfs_test.append(df_test)
 				dfs_cos.append(df_cos)
-				dfs_cos_item.append(df_cos_item)
+				dfs_cos_item.append(df_cos_items)
 				print(weight_u, weight_i)
+
+	data = []
+
+	data_bin_0 = []
+	data_bin_1 = []
+	data_bin_2 = []
+	data_bin_3 = []	
+
 
 	for j in range(1, 8):		
 		for k in range(1, 11):
 			data_t = []
 			x = dfs_test[j].iloc[:, k].tolist()
 			y = dfs_cos[j].iloc[:, k].tolist()
+			y = [((1 - value) / 2) ** 2 for value in y] 
 
 			user = read_train(train_path, seeds[k-1]).user_id.tolist()
 			user_ = read_valid_test(train_path, seeds[k-1]).user_id.tolist()
@@ -184,24 +184,24 @@ for i in range(len(datasets)):
 				if pair[0] >= th_90:
 					data_bin_3.append(pair)
 
-	# axes[i].set_rasterization_zorder(1)
-	# axes[i].scatter(np.array(data_bin_0)[:, 0], np.array(data_bin_0)[:, 1], s=4, alpha=.03, zorder=0, color=color[0])
-	# axes[i].scatter(np.array(data_bin_1)[:, 0], np.array(data_bin_1)[:, 1], s=4, alpha=.03, zorder=0, color=color[1])
-	# axes[i].scatter(np.array(data_bin_2)[:, 0], np.array(data_bin_2)[:, 1], s=4, alpha=.03, zorder=0, color=color[2])
-	# axes[i].scatter(np.array(data_bin_3)[:, 0], np.array(data_bin_3)[:, 1], s=4, alpha=.03, zorder=0, color=color[3])
+	axes[i].set_rasterization_zorder(1)
+	axes[i].scatter(np.array(data_bin_0)[:, 0], np.array(data_bin_0)[:, 1], s=4, alpha=.03, zorder=0, color=color[0])
+	axes[i].scatter(np.array(data_bin_1)[:, 0], np.array(data_bin_1)[:, 1], s=4, alpha=.03, zorder=0, color=color[1])
+	axes[i].scatter(np.array(data_bin_2)[:, 0], np.array(data_bin_2)[:, 1], s=4, alpha=.03, zorder=0, color=color[2])
+	axes[i].scatter(np.array(data_bin_3)[:, 0], np.array(data_bin_3)[:, 1], s=4, alpha=.03, zorder=0, color=color[3])
 
-	axes[i].errorbar(x=np.mean(np.array(data_bin_0)[:, 0]), y=np.mean(np.array(data_bin_0)[:, 1]), xerr=np.std(np.array(data_bin_0)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_0)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin0', color=color[0])
-	axes[i].errorbar(x=np.mean(np.array(data_bin_1)[:, 0]), y=np.mean(np.array(data_bin_1)[:, 1]), xerr=np.std(np.array(data_bin_1)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_1)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin1', color=color[1])
-	axes[i].errorbar(x=np.mean(np.array(data_bin_2)[:, 0]), y=np.mean(np.array(data_bin_2)[:, 1]), xerr=np.std(np.array(data_bin_2)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_2)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin2', color=color[2])
-	axes[i].errorbar(x=np.mean(np.array(data_bin_3)[:, 0]), y=np.mean(np.array(data_bin_3)[:, 1]), xerr=np.std(np.array(data_bin_3)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_3)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin3', color=color[3])
+	axes[i].errorbar(x=np.mean(np.array(data_bin_0)[:, 0]), y=np.mean(np.array(data_bin_0)[:, 1]), xerr=np.std(np.array(data_bin_0)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_0)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin1', color=color[0])
+	axes[i].errorbar(x=np.mean(np.array(data_bin_1)[:, 0]), y=np.mean(np.array(data_bin_1)[:, 1]), xerr=np.std(np.array(data_bin_1)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_1)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin2', color=color[1])
+	axes[i].errorbar(x=np.mean(np.array(data_bin_2)[:, 0]), y=np.mean(np.array(data_bin_2)[:, 1]), xerr=np.std(np.array(data_bin_2)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_2)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin3', color=color[2])
+	axes[i].errorbar(x=np.mean(np.array(data_bin_3)[:, 0]), y=np.mean(np.array(data_bin_3)[:, 1]), xerr=np.std(np.array(data_bin_3)[:, 0], ddof=1), yerr=np.std(np.array(data_bin_3)[:, 1], ddof=1), fmt='o:', elinewidth=6, capsize=12, label='Bin4', color=color[3])
 	
 	
 	if i == 0:
-		axes[i].set_ylim(0.15, 0.40)
+		axes[i].set_ylim(0.08, 0.18)
 	elif i == 1:
-		axes[i].set_ylim(0.10, 0.45)
+		axes[i].set_ylim(0.10, 0.20)
 	elif i == 2:
-		axes[i].set_ylim(0.1, 0.5)
+		axes[i].set_ylim(0.07, 0.09)
 	axes[i].set_xscale('log', basex=np.e)
 	axes[i].xaxis.set_major_formatter(formatter)
 	axes[i].set_xticks(range(1, 6))
@@ -228,18 +228,18 @@ for i in range(len(datasets)):
 # 	ax.set_title('w='+str(weight), fontsize=32, fontweight='heavy')
 fig.subplots_adjust(top=0.9, left=0.1, right=0.9, bottom=0.2)
 # axes.flatten()[-2].legend(loc='upper center', bbox_to_anchor=(0.5, -0.12), ncol=4)
-axes.flatten()[-2].legend(loc='lower center', bbox_to_anchor=(0.5, -0.2), borderaxespad=0, fontsize=36,  ncol=4)
+axes.flatten()[-2].legend(loc='lower center', bbox_to_anchor=(0.5, -0.17), borderaxespad=0, fontsize=36,  ncol=4)
 	
 fig = axes[0].get_figure()  # getting the figure
 ax0 = fig.add_subplot(111, frame_on=False)   # creating a single axes
 plt.tick_params(labelcolor='none', top=False, bottom=False, left=False, right=False)
 plt.xlabel('uRMSE', fontsize=48)
-plt.ylabel('User Cosine Similarity',fontsize=48, labelpad=60)
+plt.ylabel('User Reconstruction Loss',fontsize=48, labelpad=48)
 # fig.suptitle(ds, fontsize=36, fontweight='bold', y=1.05)
 # plt.title(ds, fontsize=36, fontweight='bold', y=1.02)
 plt.tight_layout()
-fig.savefig(os.path.join('figures', 'bin.png'), rasterized=True, dpi=300, bbox_inches='tight')
-# fig.savefig(os.path.join('figures', 'bin_scatter.png'), rasterized=True, dpi=80, bbox_inches='tight')
+# fig.savefig(os.path.join('figures', 'bin_camera_ready.png'), rasterized=True, dpi=300, bbox_inches='tight')
+fig.savefig(os.path.join('figures', 'bin_scatter.png'), rasterized=True)
 # fig.savefig(os.path.join('figures', 'q3_camera_ready.png'), rasterized=True, dpi=300)
 
 # print(np.mean(np.array(data_bin_0)[:, 0]), np.mean(np.array(data_bin_0)[:, 1]))
