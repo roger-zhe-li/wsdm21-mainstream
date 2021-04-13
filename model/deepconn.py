@@ -401,7 +401,7 @@ class DeepCoNNTrainTest:
 		self._item_size = dataset_meta_info['item_size']
 		self._dataset_size = dataset_meta_info['dataset_size']
 		# print(self._review_length)
-		self._review_length = dataset_meta_info['mean_review_length']
+		self._review_length = self._review_length
 		# print(self._review_length)
 
 		# initial DeepCoNN model
