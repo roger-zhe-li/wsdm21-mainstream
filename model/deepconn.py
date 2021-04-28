@@ -528,8 +528,8 @@ class DeepCoNNTrainTest:
 						train_loss = 1.0 / 16 * self._loss_func(pred, rating.flatten())
 					else:
 						train_loss = 1.0 / 16 * self._loss_func(pred, rating.flatten()) +\
-									1.0 / user_count * self._coef_u * self._loss_func(target, self._cos_loss_fn(user_review_vec.view(len(pred), -1), user_emb_restore.view(len(pred), -1), y)) +\
-									1.0 / item_count * self._coef_i * self._loss_func(target, self._cos_loss_fn(item_review_vec.view(len(pred), -1), item_emb_restore.view(len(pred), -1), y))  
+									1.0 / user_count * self._coef_u * self._loss_func(target, 0.5 * self._cos_loss_fn(user_review_vec.view(len(pred), -1), user_emb_restore.view(len(pred), -1), y)) +\
+									1.0 / item_count * self._coef_i * self._loss_func(target, 0.5 * self._cos_loss_fn(item_review_vec.view(len(pred), -1), item_emb_restore.view(len(pred), -1), y))  
 
 				# train_loss = self._loss_func(pred, rating.flatten()) + \
 				#              1.0 / user_count * self._coef * weight_u * self._loss_func(user_review_vec, user_emb_restore) + \
