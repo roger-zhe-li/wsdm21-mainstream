@@ -6,7 +6,7 @@ Roger Zhe Li, Julián Urbano, Alan Hanjalic (2021). Leave No User Behind: Toward
 
 **Please cite our WSDM '21 paper if you use our code and data. Thanks!** 
 
-Author: Roger Zhe Li (http://www.zhe-li.me)
+Author: Roger Zhe Li (https://www.zhe-li.me)
 
 ## Environment Settings
 We use PyTorch 1.6.0 as the main deep learning framework for implementation. The data analysis relies heavily on pyGAM.
